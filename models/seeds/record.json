@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "name": "Breakfast",
+      "date": "2021-04-18",
+      "category": "Food",
+      "amount": 60
+    },
+    {
+      "name": "Lunch",
+      "date": "2021-04-18",
+      "category": "Food",
+      "amount": 90
+    },
+    {
+      "name": "Rent",
+      "date": "2021-04-18",
+      "category": "House",
+      "amount": 10000
+    },
+    {
+      "name": "Bus",
+      "date": "2021-04-18",
+      "category": "Transport",
+      "amount": 300
+    },
+    {
+      "name": "Dental care",
+      "date": "2021-04-18",
+      "category": "Medical",
+      "amount": 250
+    },
+    {
+      "name": "Donation",
+      "date": "2021-04-18",
+      "category": "Others",
+      "amount": 1200
+    }
+  ]
+}

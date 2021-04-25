@@ -1,10 +1,9 @@
-<div class="container" style="border: 1px solid grey;">
-  <div class="row align-items-center">
-    <div class="col">
-
-      <div class="dropdown">
-        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+<div class="container">
+  <div class="row d-flex justify-content-center">
+     <div class="col-12 col-md-8 mb-4 dropdown" style="border: 1px solid grey;">
+      {{!-- <div class=""> --}}
+        <button class="btn btn-secondary btn-sm dropdown-toggle btn-block" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Category
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -12,15 +11,31 @@
           <a class="dropdown-item" href="#">Another action</a>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
+      {{!-- </div> --}}
+        </div>
+
+      <div class="col-12 col-md-8" style="border: 1px solid peachpuff;">
+        <h5 class="text-center">Total Expenses</h5>
+        <h1 class="text-center text-danger">$ {{total}}</h1>
+        <div class="list-group">
+          {{#each records}}
+          <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <div><h5 class="mb-1"><i class="{{this.icon}} pr-3"></i>{{this.name}}</h5></div>
+              <span class="mb-1">$ {{this.amount}}</span>
+            </div>
+            <span class="mb-1">{{this.date}}</span>
+          </div>
+           {{/each}}
+        </div>
 
       </div>
-      <div class="col" style="border: 1px solid peachpuff;">
-        總金額：
+      
+      <div class="col-12 col-md-8 mt-4 d-flex justify-content-center" style="border: 1px solid pink;">
+        <button type="button" class="btn btn-sm" style="background-color: #627E90; color:#FAFAFA">New Expense</button>
       </div>
-      <div class="col" style="border: 1px solid pink;">
-        <button type="button" class="btn btn-sm" style="background-color: #627E90; color:#FAFAFA">Add</button>
-      </div>
-    </div>
+
+  
 
 
 
