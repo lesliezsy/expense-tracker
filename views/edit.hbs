@@ -9,7 +9,7 @@
       <form class="needs-validation" novalidate action="/records/{{ record._id }}?_method=PUT" method="POST">
         <div class="col-12 mb-3">
           <label for="name" class="form-label">Name *</label>
-          <input type="text" class="form-control" id="name" name="name" value="{{ record.name }}" required>
+          <input type="text" class="form-control" id="name" name="name" maxlength="25" value="{{ record.name }}" required>
           <div class="invalid-feedback">
             Required
           </div>
@@ -41,9 +41,9 @@
 
         <div class="col-12 mb-3">
           <label for="amount" class="form-label">Amount *</label>
-          <input type="number" class="form-control" id="amount" name="amount" value="{{ record.amount }}" required>
+          <input type="number" class="form-control" id="amount" name="amount" min="0" max="100000000" value="{{ record.amount }}" required>
           <div class="invalid-feedback">
-            Required
+            Required, integer only.
           </div>
         </div>
 
@@ -77,5 +77,17 @@
       })
   })()
 
+ // 限制日期區間： 2020.01.01 至 今日
+  let date = new Date().toISOString().substr(0, 10);
+  document.querySelector("#date").value = date;
+
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1; //January is 0!
+  let yyyy = today.getFullYear();
+  if (dd < 10) dd = '0' + dd
+  if (mm < 10) mm = '0' + mm
+  today = yyyy + '-' + mm + '-' + dd;
+  document.querySelector("#date").setAttribute("max", today);
  
 </script>

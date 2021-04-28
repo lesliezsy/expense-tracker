@@ -4,21 +4,12 @@ const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
 
-// 可以按照不同的category算總和
-// {$match:
-//   { 'category': Record.category}
-// },
 router.get('/', async (req, res) => {
   try {
     // aggregate 不需要使用 lean()
     const amountData = await Record.aggregate(
       [{
-        $group: {
-          _id: null,
-          amount: {
-            $sum: "$amount"
-          }
-        }
+        $group: { _id: null, amount: { $sum: "$amount" } }
       }]
     )
 

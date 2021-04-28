@@ -23,3 +23,8 @@ const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })
+
+// 待優化項目： 
+// hbs的option 可用each解決 不用重複 
+// filter 應該可以把find跟aggregate做整合 有更佳做法
+// category 應該不用做成seeder 放在public當靜態檔案輸出使用即可
