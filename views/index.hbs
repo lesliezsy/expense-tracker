@@ -19,7 +19,7 @@
       <h1 class="text-center text-red">$ {{total}}</h1>
       <div class="list-group">
         {{#each records}}
-        
+
         <div class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"><i class="{{this.icon}} pr-3"></i>{{this.name}}</h5>
@@ -30,23 +30,49 @@
             <span>{{this.date}}</span>
             <div class="d-flex">
               <a class="btn btn-sm rounded-circle" href="./records/{{this._id}}/edit"><i class="fas fa-pen"></i></a>
-              <form action="./records/{{this._id}}?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-sm rounded-circle">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </form>
+              <button type="button" class="btn btn-sm rounded-circle" data-toggle="modal"
+                data-target="#basicModal" onclick="setIDtoModal('{{this._id}}')">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </div>
           </div>
 
         </div>
         {{/each}}
       </div>
-
     </div>
 
     <div class="col-12 col-md-8 d-flex justify-content-center">
       <a class="btn btn-sm btn-major" href="./records/new">New Expense</a>
     </div>
 
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Are you sure to delete this expense?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Once you confirm, this expense will be removed from the list.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-minor" data-dismiss="modal">No</button>
+            <form id="deleteRecord" method="POST">
+              <button type="submit" class="btn btn-major">Yes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<script type="text/javascript">
+function setIDtoModal(value) {
+  document.getElementById("deleteRecord").action = `./records/${value}?_method=DELETE`
+}
+</script>

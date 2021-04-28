@@ -38,7 +38,7 @@ router.put('/:id', (req, res) => {
           record = Object.assign(record, req.body)
           return record.save()
       })
-      .then(() => res.redirect(`/`))
+      .then(() => res.redirect('/'))
       .catch(error => console.log(error))
 })
 
@@ -46,5 +46,14 @@ Handlebars.registerHelper('selected', function (value, test) {
   if (value == undefined) return ''
   return value === test ? 'selected' : ''
 });
+
+// Delete
+router.delete('/:id', (req, res) => {
+  const id = req.params.id 
+  return Record.findById(id)
+      .then(record => record.remove())
+      .then(() => res.redirect('/')) 
+      .catch(error => console.log(error))
+})
 
 module.exports = router
