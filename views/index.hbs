@@ -1,41 +1,50 @@
-<div class="container">
+<div class="container my-4">
   <div class="row d-flex justify-content-center">
-     <div class="col-12 col-md-8 mb-4 dropdown" style="border: 1px solid grey;">
-      {{!-- <div class=""> --}}
+    <div class="col-12 col-md-8 mb-4" style="border: 1px solid grey;">
+      <div class="dropdown">
         <button class="btn btn-secondary btn-sm dropdown-toggle btn-block" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Category
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
-      {{!-- </div> --}}
-        </div>
+      </div>
+    </div>
 
-      <div class="col-12 col-md-8" style="border: 1px solid peachpuff;">
-        <h5 class="text-center">Total Expenses</h5>
-        <h1 class="text-center text-danger">$ {{total}}</h1>
-        <div class="list-group">
-          {{#each records}}
-          <div class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <div><h5 class="mb-1"><i class="{{this.icon}} pr-3"></i>{{this.name}}</h5></div>
-              <span class="mb-1">$ {{this.amount}}</span>
-            </div>
-            <span class="mb-1">{{this.date}}</span>
+    <div class="col-12 col-md-8">
+      <h5 class="text-center">Total Expenses</h5>
+      <h1 class="text-center" style="color:#9b1f23">$ {{total}}</h1>
+      <div class="list-group">
+        {{#each records}}
+        <div class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><i class="{{this.icon}} pr-3"></i>{{this.name}}</h5>
+            <span class="mb-1">$ {{this.amount}}</span>
           </div>
-           {{/each}}
+          <span class="mb-1">{{this.date}}</span>
+
+          <div class="d-flex w-100 justify-content-end">
+            <a class="btn btn-sm rounded-circle" href="./records/{{this._id}}/edit"><i
+                class="fas fa-pen"></i></a>
+            <form action="./records/{{this._id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-sm rounded-circle">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </form>
+          </div>
+
         </div>
-
-      </div>
-      
-      <div class="col-12 col-md-8 mt-4 d-flex justify-content-center" style="border: 1px solid pink;">
-        <button type="button" class="btn btn-sm" style="background-color: #627E90; color:#FAFAFA">New Expense</button>
+        {{/each}}
       </div>
 
-  
+    </div>
+
+    <div class="col-12 col-md-8 mt-4 d-flex justify-content-center">
+     <a class="btn btn-sm btn-major" href="./records/new">New Expense</a>
+    </div>
 
 
 

@@ -14,10 +14,10 @@ app.engine('hbs', exphbs({
 }))
 
 app.set('view engine', 'hbs')
-
 app.use(urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(routes)
+app.use(express.static('public'))
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

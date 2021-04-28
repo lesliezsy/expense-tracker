@@ -1,0 +1,41 @@
+body {
+  font-family: 'Jaldi', sans-serif;
+  background-color: #FAFAFA;
+}
+
+.navbar .navbar-brand {
+  font-family: 'Comfortaa', cursive;
+  color: #dddddd;
+  font-size: 1rem;
+}
+
+.btn-major {
+  background-color: #627E90;
+  color: #FAFAFA;
+}
+
+.btn-major:hover {
+  background-color: #7A919F;
+  color: #FAFAFA;
+}
+
+.btn-minor {
+  background-color: #9BAAB3;
+  color: #083958;
+}
+
+.btn-minor:hover {
+  background-color: #b5c8d4;
+  color: #083958;
+}
+
+
+.btn-third {
+  background-color: #D8D8D8;
+  color: #083958;
+}
+
+.btn-third:hover {
+  background-color: #e6e6e6;
+  color: #083958;
+}
