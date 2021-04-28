@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
+const Handlebars = require("handlebars")
 
+// Create
 router.get('/new', (req, res) => {
   return res.render('new')
 })
@@ -14,28 +16,35 @@ router.post('/', (req, res) => {
       .catch(error => console.log(error))
 })
 
+// Update
+router.get('/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id) // 利用id查詢資料庫的資料
+      .lean()
+      .then((record) => {
+        res.render('edit', {
+          record
+      })
+      console.log(record);
+      }) // 若找到資料，將它傳給 edit 樣板
+      .catch(error => console.log(error))
+})
 
+router.put('/:id', (req, res) => {
+  const id = req.params.id
+  console.log(req.params)
+  return Record.findById(id)
+      .then(record => {
+          record = Object.assign(record, req.body)
+          return record.save()
+      })
+      .then(() => res.redirect(`/`))
+      .catch(error => console.log(error))
+})
 
-// Update: Edit a record's info
-// router.get('/:id/edit', (req, res) => {
-//   const id = req.params.id
-//   return Record.findById(id) // 利用id查詢資料庫的資料
-//       .lean()
-//       .then((record) => res.render('edit', {
-//           record
-//       })) // 若找到資料，將它傳給 edit 樣板
-//       .catch(error => console.log(error))
-// })
-
-// router.put('/:id', (req, res) => {
-//   const id = req.params.id
-//   return Restaurant.findById(id)
-//       .then(record => {
-//           record = Object.assign(record, req.body)
-//           return record.save()
-//       })
-//       .then(() => res.redirect(`/records/${id}`))
-//       .catch(error => console.log(error))
-// })
+Handlebars.registerHelper('selected', function (value, test) {
+  if (value == undefined) return ''
+  return value === test ? 'selected' : ''
+});
 
 module.exports = router

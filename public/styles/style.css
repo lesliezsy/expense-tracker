@@ -9,6 +9,10 @@ body {
   font-size: 1rem;
 }
 
+.text-red {
+  color:#9b1f23;
+}
+
 .btn-major {
   background-color: #627E90;
   color: #FAFAFA;

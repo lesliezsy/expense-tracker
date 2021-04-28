@@ -1,6 +1,6 @@
 <div class="container my-4">
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-8 mb-4" style="border: 1px solid grey;">
+    <div class="col-12 col-md-8" style="border: 1px solid grey;">
       <div class="dropdown">
         <button class="btn btn-secondary btn-sm dropdown-toggle btn-block" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -14,26 +14,28 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 my-3">
       <h5 class="text-center">Total Expenses</h5>
-      <h1 class="text-center" style="color:#9b1f23">$ {{total}}</h1>
+      <h1 class="text-center text-red">$ {{total}}</h1>
       <div class="list-group">
         {{#each records}}
+        
         <div class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"><i class="{{this.icon}} pr-3"></i>{{this.name}}</h5>
-            <span class="mb-1">$ {{this.amount}}</span>
+            <span>$ {{this.amount}}</span>
           </div>
-          <span class="mb-1">{{this.date}}</span>
 
-          <div class="d-flex w-100 justify-content-end">
-            <a class="btn btn-sm rounded-circle" href="./records/{{this._id}}/edit"><i
-                class="fas fa-pen"></i></a>
-            <form action="./records/{{this._id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn btn-sm rounded-circle">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </form>
+          <div class="d-flex w-100 justify-content-between">
+            <span>{{this.date}}</span>
+            <div class="d-flex">
+              <a class="btn btn-sm rounded-circle" href="./records/{{this._id}}/edit"><i class="fas fa-pen"></i></a>
+              <form action="./records/{{this._id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-sm rounded-circle">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </div>
           </div>
 
         </div>
@@ -42,11 +44,9 @@
 
     </div>
 
-    <div class="col-12 col-md-8 mt-4 d-flex justify-content-center">
-     <a class="btn btn-sm btn-major" href="./records/new">New Expense</a>
+    <div class="col-12 col-md-8 d-flex justify-content-center">
+      <a class="btn btn-sm btn-major" href="./records/new">New Expense</a>
     </div>
-
-
 
   </div>
 </div>

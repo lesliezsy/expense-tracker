@@ -1,47 +1,56 @@
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-12 mx-auto">
-      <h5>Edit</h5>
-      <form class="row g-3 needs-validation" novalidate action="/restaurants/{{ record._id }}?_method=PUT" method="POST">
-        <div class="col-10">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" class="form-control" value="{{ record.name }}" required>
+  <div class="row d-flex justify-content-center">
+    <div class="col-10 col-md-8">
+
+      <div class="col-12 mb-3">
+        <h5 class="text-center"> Edit your expense</h5>
+      </div>
+
+      <form class="needs-validation" novalidate action="/records/{{ record._id }}?_method=PUT" method="POST">
+        <div class="col-12 mb-3">
+          <label for="name" class="form-label">Name *</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{ record.name }}" required>
           <div class="invalid-feedback">
-            必填
+            Required
           </div>
         </div>
-   
-        <div class="col-10">
-          <label for="date" class="form-label">Date</label>
-          <input type="text" id="date" name="date" class="form-control" value="{{ record.date }}" required>
-           <div class="invalid-feedback">
-            必填
+        <div class="col-12 mb-3">
+          <label for="date" class="form-label">Date *</label>
+          <div class="input-group mb-3">
+            <input type="date" class="form-control" id="date" name="date" min="2021-01-01" value="{{ record.date }}" required>
+          </div>
+          <div class="invalid-feedback">
+            Required
           </div>
         </div>
-    
-        <div class="col-10 col-md-6">
-          <label for="category" class="form-label">Category</label>
-          <input type="text" id="category" name="category" class="form-control" value="{{record.category}}" required>
-           <div class="invalid-feedback">
-            必填
+        <div class="col-12 mb-3">
+          <label for="category" class="form-label">Category *</label>
+          <select class="form-select form-control " id="category" name="category" required>
+            <option disabled>Please select</option>
+            <option value="Food" {{selected record.category 'Food'}}>Food</option>
+            <option value="House" {{selected record.category 'House'}}>House</option>
+            <option value="Transport" {{selected record.category 'Transport'}}>Transport</option>
+            <option value="Medical" {{selected record.category 'Medical'}}>Medical</option>
+            <option value="Entertainment" {{selected record.category 'Entertainment'}}>Entertainment</option>
+            <option value="Others" {{selected record.category 'Others'}}>Others</option>
+          </select>
+          <div class="invalid-feedback">
+            Required
           </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <label for="amount" class="form-label">Amount</label>
-          <input type="number" inputmode="numeric" maxlength="3" id="amount" name="amount" class="form-control" value="{{ record.amount }}" required>
-           <div class="invalid-feedback">
-            必填
-          </div>
-        </div>
-       
-
-    
-
-        <div class="col-10 my-3 d-flex flex-row-reverse">
-          <button type="submit" class="btn btn-minor ml-3">Update</button>
-          <button type="button" class="btn btn-third" onclick="javascript:history.back()">Back</button>
         </div>
 
+        <div class="col-12 mb-3">
+          <label for="amount" class="form-label">Amount *</label>
+          <input type="number" class="form-control" id="amount" name="amount" value="{{ record.amount }}" required>
+          <div class="invalid-feedback">
+            Required
+          </div>
+        </div>
+
+        <div class="col-12 my-3 d-flex flex-row-reverse">
+          <button type="submit" class="btn btn-major">Update</button>
+          <button type="button" class="btn btn-minor mr-4" onclick="javascript:history.back()">Back</button>
+        </div>
       </form>
 
     </div>
@@ -50,23 +59,23 @@
 
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
+  (function () {
+    'use strict'
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+ 
 </script>
