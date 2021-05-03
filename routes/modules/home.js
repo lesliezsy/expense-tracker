@@ -15,7 +15,9 @@ router.get('/', async (req, res) => {
       { $project: { _id: 0 } }]
     ) // aggregate 不需要使用 lean()
 
-    const total = amountData[0]['amount'] || 0
+    console.log(amountData[0]);
+
+    const total = amountData[0]['amount'] || '0'
     
     // match category icon
     records.map(record => {
