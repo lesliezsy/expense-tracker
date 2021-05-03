@@ -6,10 +6,12 @@ const Category = require('../../public/js/category')
 
 router.get('/', async (req, res) => {
   let total = 0
+  let records = []
+  let amountData = []
 
   try {
-    const records = await Record.find().lean()
-    const amountData = await Record.aggregate(
+    records = await Record.find().lean()
+    amountData = await Record.aggregate(
       [{
         $group: { _id: null, amount: { $sum: "$amount" } }
       }]
