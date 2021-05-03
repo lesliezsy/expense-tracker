@@ -5,19 +5,17 @@ const Record = require('../../models/record')
 const Category = require('../../public/js/category')
 
 router.get('/', async (req, res) => {
-  let total = 0
-  let records = []
-  let amountData = []
 
   try {
-    records = await Record.find().lean()
-    amountData = await Record.aggregate(
+    const records = await Record.find().lean()
+    const amountData = await Record.aggregate(
       [{
         $group: { _id: null, amount: { $sum: "$amount" } }
-      }]
+      },
+      { $project: { _id: 0 } }]
     ) // aggregate 不需要使用 lean()
 
-    total = amountData[0]['amount']
+    const total = amountData[0]['amount'] || 0
     
     // match category icon
     records.map(record => {

@@ -59,14 +59,12 @@ router.get('/', async (req, res) => {
   const selectedCategory = Object.keys(req.query)[0]
   let total = 0
   let noResult = ''
-  let records = []
-  let amountData = []
 
   try {
-    records = await Record.find({
+    const records = await Record.find({
       category: selectedCategory
     }).lean()
-    amountData = await Record.aggregate([{
+    const amountData = await Record.aggregate([{
         $match: { "category": selectedCategory }
       },
       {
@@ -86,7 +84,7 @@ router.get('/', async (req, res) => {
       })
     }
 
-    total = amountData[0]['amount']
+    total = amountData[0]['amount'] || 0
 
     // match category icon
     records.map(record => {
