@@ -31,11 +31,10 @@ router.get('/', async (req, res) => {
 
   } catch (err) {
     console.log(err)
-      return res.render('index', {
+    res.render('index', {
         records,
         total
       })
-    
   }
 })
 
