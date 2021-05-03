@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const Record = require('../../models/record')
-const Category = require('../../models/category')
 const Handlebars = require("handlebars")
+const Record = require('../../models/record')
+const Category = require('../../public/js/category')
 
 // Create
 router.get('/new', (req, res) => {
@@ -54,38 +54,30 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// Filter
+// Filter - 先篩選出類別及項目內容，再計算總金額
 router.get('/', async (req, res) => {
-  // 先篩選出類別，再計算總額
   const selectedCategory = Object.keys(req.query)[0]
+  let total = 0
+  let noResult = ''
 
   try {
-    const records = await Record
-      .find({
-        category: selectedCategory
-      })
-      .lean()
+    const records = await Record.find({
+      category: selectedCategory
+    }).lean()
     const amountData = await Record.aggregate([{
-        $match: {
-          category: selectedCategory
-        }
+        $match: { "category": selectedCategory }
       },
       {
         "$group": {
           _id: null,
-          amount: {
-            $sum: "$amount"
-          }
+          amount: { $sum: "$amount"}
         }
-      }
+      },
+      { $project: { _id: 0 } }
     ])
-
-    let total = 0
-    let noResult = ''
 
     if (amountData.length === 0) {
       noResult = 'No expense in this category so far.'
-      total = 0
       return res.render('index', {
         noResult,
         total
@@ -95,9 +87,9 @@ router.get('/', async (req, res) => {
     total = amountData[0]['amount']
     noResult = ''
 
-    const categoryData = await Category.find().lean()
+    // match category icon
     records.map(record => {
-      categoryData.map(category => {
+      Category.results.map(category => {
         if (record.category === category.name) record.icon = category.icon
       })
     })

@@ -78,9 +78,6 @@
   })()
 
  // 限制日期區間： 2020.01.01 至 今日
-  let date = new Date().toISOString().substr(0, 10);
-  document.querySelector("#date").value = date;
-
   let today = new Date();
   let dd = today.getDate();
   let mm = today.getMonth() + 1; //January is 0!

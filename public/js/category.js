@@ -1,4 +1,4 @@
-{
+module.exports = {
   "results": [
     {
       "name": "Food",
