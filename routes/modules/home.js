@@ -17,9 +17,6 @@ router.get('/', async (req, res) => {
       { $project: { _id: 0 } }]
     ) // aggregate 不需要使用 lean()
 
-    console.log(amountData);
-    console.log(records);
-
     if (amountData.length === 0 || !amountData) {
       noResult = 'No expense in this category so far.'
       return res.render('index', {

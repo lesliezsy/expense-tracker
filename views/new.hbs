@@ -10,7 +10,7 @@
       <form class="needs-validation" novalidate action="/records" method="POST">
         <div class="col-12 mb-3">
           <label for="name" class="form-label">Name *</label>
-          <input type="text" class="form-control" id="name" name="name" maxlength="25" required>
+          <input type="text" class="form-control" id="name" name="name" maxlength="35" required>
           <div class="invalid-feedback">
             Required
           </div>
@@ -42,9 +42,9 @@
 
         <div class="col-12 mb-3">
           <label for="amount" class="form-label">Amount *</label>
-          <input type="number" class="form-control" id="amount" name="amount" min="0" max="100000000" required>
+          <input type="number" class="form-control" id="amount" name="amount" min="0" max="10000000000" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
           <div class="invalid-feedback">
-            Required, integer only.
+            Required. Integer only. Maximum value: $10000000000.
           </div>
         </div>
 
