@@ -76,14 +76,14 @@ router.get('/', async (req, res) => {
       { $project: { _id: 0 } }
     ])
 
-    if (amountData.length === 0) {
+    if (amountData.length === 0 || !amountData) {
       noResult = 'No expense in this category so far.'
       return res.render('index', {
         noResult,
         total
       })
-    }
-
+    } 
+    
     total = amountData[0]['amount']
 
     // match category icon
@@ -93,7 +93,7 @@ router.get('/', async (req, res) => {
       })
     })
 
-    return res.render('index', {
+    res.render('index', {
       records,
       total
     })

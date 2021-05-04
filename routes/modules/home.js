@@ -5,6 +5,8 @@ const Record = require('../../models/record')
 const Category = require('../../public/js/category')
 
 router.get('/', async (req, res) => {
+  let total = 0
+  let noResult = ''
 
   try {
     const records = await Record.find().lean()
@@ -15,8 +17,19 @@ router.get('/', async (req, res) => {
       { $project: { _id: 0 } }]
     ) // aggregate 不需要使用 lean()
 
-    const total = amountData[0]['amount']
+    console.log(amountData);
+    console.log(records);
+
+    if (amountData.length === 0 || !amountData) {
+      noResult = 'No expense in this category so far.'
+      return res.render('index', {
+        noResult,
+        total
+      })
+    } 
     
+    total = amountData[0]['amount']
+
     // match category icon
     records.map(record => {
       Category.results.map(category => {
