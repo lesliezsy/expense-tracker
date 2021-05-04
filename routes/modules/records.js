@@ -84,7 +84,7 @@ router.get('/', async (req, res) => {
       })
     }
 
-    total = amountData[0]['amount'] || '0'
+    total = amountData[0]['amount']
 
     // match category icon
     records.map(record => {
