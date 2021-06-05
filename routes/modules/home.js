@@ -11,20 +11,15 @@ router.get('/', async (req, res) => {
   try {
     const records = await Record.find().lean()
     const amountData = await Record.aggregate(
-      [{
-        $group: { _id: null, amount: { $sum: "$amount" } }
-      },
-      { $project: { _id: 0 } }]
-    ) // aggregate 不需要使用 lean()
+      [{ $group: { _id: null, amount: { $sum: "$amount" } } },
+        { $project: { _id: 0 } }
+      ]) // aggregate 不需要使用 lean()
 
     if (amountData.length === 0 || !amountData) {
       noResult = 'No expense in this category so far.'
-      return res.render('index', {
-        noResult,
-        total
-      })
-    } 
-    
+      return res.render('index', { noResult, total })
+    }
+
     total = amountData[0]['amount']
 
     // match category icon
@@ -34,10 +29,7 @@ router.get('/', async (req, res) => {
       })
     })
 
-    res.render('index', {
-      records,
-      total
-    })
+    res.render('index', { records, total })
 
   } catch (err) {
     console.log(err)

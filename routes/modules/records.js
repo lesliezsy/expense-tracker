@@ -22,9 +22,7 @@ router.get('/:id/edit', (req, res) => {
   return Record.findById(id) // 利用id查詢資料庫的資料
     .lean()
     .then((record) => {
-      res.render('edit', {
-        record
-      })
+      res.render('edit', { record })
     }) // 若找到資料，將它傳給 edit 樣板
     .catch(error => console.log(error))
 })
@@ -40,7 +38,7 @@ router.put('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-Handlebars.registerHelper('selected', function (value, test) {
+Handlebars.registerHelper('selected', function(value, test) {
   if (value == undefined) return ''
   return value === test ? 'selected' : ''
 });
@@ -64,28 +62,16 @@ router.get('/', async (req, res) => {
     const records = await Record.find({
       category: selectedCategory
     }).lean()
-    const amountData = await Record.aggregate([{
-        $match: { "category": selectedCategory }
-      },
-      {
-        "$group": {
-          _id: null,
-          amount: { $sum: "$amount"}
-        }
-      },
+    const amountData = await Record.aggregate([{ $match: { "category": selectedCategory } },
+      { "$group": { _id: null, amount: { $sum: "$amount" } } },
       { $project: { _id: 0 } }
     ])
 
-    console.log(amountData);
-
     if (amountData.length === 0 || !amountData) {
       noResult = 'No expense in this category so far.'
-      return res.render('index', {
-        noResult,
-        total
-      })
-    } 
-    
+      return res.render('index', { noResult, total })
+    }
+
     total = amountData[0]['amount']
 
     // match category icon
@@ -95,10 +81,7 @@ router.get('/', async (req, res) => {
       })
     })
 
-    res.render('index', {
-      records,
-      total
-    })
+    res.render('index', { records, total })
 
   } catch (err) {
     console.log(err);
