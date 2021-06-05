@@ -76,6 +76,8 @@ router.get('/', async (req, res) => {
       { $project: { _id: 0 } }
     ])
 
+    console.log(amountData);
+
     if (amountData.length === 0 || !amountData) {
       noResult = 'No expense in this category so far.'
       return res.render('index', {

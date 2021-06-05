@@ -21,9 +21,13 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-dark justify-content-between" style="background-color: #083958;">
+    <nav class="navbar navbar-dark justify-content-between bg-primary">
       <a class="navbar-brand" href="/">Expense Tracker</a>
-      {{!-- <a class="btn btn-outline-light" href="/todos/new">Create</a> --}}
+       {{#if isAuthenticated}}
+      <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+      {{else}}
+      <a href="/users/login" class="btn btn-outline-light">Login</a>
+      {{/if}}
     </nav>
   </header>
 

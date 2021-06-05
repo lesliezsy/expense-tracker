@@ -13,6 +13,22 @@ body {
   color:#9b1f23;
 }
 
+.text-primary {
+  color: #083958 !important;
+}
+
+.text-major {
+  color: #627E90;
+}
+
+.text-major:hover {
+  color: #7A919F;
+}
+
+.bg-primary {
+  background-color: #083958 !important;
+} 
+
 .btn-major {
   background-color: #627E90;
   color: #FAFAFA;
