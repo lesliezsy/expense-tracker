@@ -1,8 +1,10 @@
 const express = require('express')
+const session = require('express-session')
 const exphbs = require('express-handlebars')
 const { urlencoded } = require("body-parser")
 const methodOverride = require('method-override')
 const routes = require('./routes')
+// const usePassport = require('./config/passport')
 
 require('./config/mongoose')
 
@@ -13,7 +15,16 @@ app.engine('hbs', exphbs({
   extname: '.hbs'
 }))
 
+// usePassport(app)
+
 app.set('view engine', 'hbs')
+
+app.use(session({
+  secret: 'ExpenseTrackerSecret', // session 用來驗證 session id 的字串
+  resave: false,
+  saveUninitialized: true
+}))
+
 app.use(urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(routes)
