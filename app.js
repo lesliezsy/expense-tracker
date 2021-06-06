@@ -6,6 +6,9 @@ const exphbs = require('express-handlebars')
 const { urlencoded } = require("body-parser")
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const routes = require('./routes')
 
 require('./config/mongoose')
@@ -20,7 +23,7 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ExpenseTrackerSecret', // session 用來驗證 session id 的字串
+  secret: process.env.SESSION_SECRET, // session 用來驗證 session id 的字串
   resave: false,
   saveUninitialized: true
 }))
@@ -37,13 +40,13 @@ app.use((req, res, next) => {
   console.log("req user: ", req.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
-  res.locals.success_msg = req.flash('success_msg')
+  res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
   res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 app.use(routes)
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose') 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/expense-tracker' // record是指本地的資料庫名稱
+const MONGODB_URI = process.env.MONGODB_URI
+// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/expense-tracker' // expense-tracker是指本地的資料庫名稱
+
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
