@@ -2,14 +2,19 @@ const express = require('express')
 const router = express.Router()
 
 const Record = require('../../models/record')
+// const Category = require('../../models/category')
 const Category = require('../../public/js/category')
 
 router.get('/', async (req, res) => {
+
   let total = 0
   let noResult = ''
+  const { _id: userId } = req.user
 
   try {
-    const records = await Record.find().lean()
+    const records = await Record.find({ userId }).lean()
+    // 把 Category的部分改寫
+    // 設定條件，
     const amountData = await Record.aggregate(
       [{ $group: { _id: null, amount: { $sum: "$amount" } } },
         { $project: { _id: 0 } }

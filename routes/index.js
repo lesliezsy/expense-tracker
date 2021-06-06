@@ -7,9 +7,9 @@ const users = require('./modules/users')
 
 const { authenticator } = require('../middleware/auth')  // 掛載 middleware
 
-router.use('/records', records)
+router.use('/records', authenticator, records)
 router.use('/users', users)
-router.use('/', home)
+router.use('/', authenticator, home)
 
 // 匯出路由器
 module.exports = router

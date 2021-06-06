@@ -5,6 +5,7 @@ const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const { urlencoded } = require("body-parser")
 const methodOverride = require('method-override')
+const flash = require('connect-flash')
 const routes = require('./routes')
 
 require('./config/mongoose')
@@ -26,20 +27,23 @@ app.use(session({
 
 app.use(urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(express.static('public'))
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
+app.use(flash())
 // 使用 app.use 代表這組 middleware 會作用於所有的路由
 app.use((req, res, next) => {
   // req.user 是在反序列化時，取出的 user 資訊，之後會放在 req.user 裡以供後續使用
-  console.log("req user: ",req.user)
+  console.log("req user: ", req.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 app.use(routes)
-app.use(express.static('public'))
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })

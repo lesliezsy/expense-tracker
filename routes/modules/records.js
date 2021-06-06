@@ -11,15 +11,20 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const record = req.body // 從 req.body 拿出表單裡的資料
-  return Record.create(record) // 存入資料庫
+  record.userId = req.user._id
+
+  console.log("req.body: ", record)
+
+  return Record.create(record) // 原封不動將這筆 obj 存入資料庫
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
 
 // Update
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  return Record.findById(id) // 利用id查詢資料庫的資料
+  const userId = req.user._id 
+  const _id = req.params.id
+  return Record.findOne({ _id, userId }) // 利用id查詢資料庫的資料
     .lean()
     .then((record) => {
       res.render('edit', { record })
@@ -27,10 +32,12 @@ router.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-router.put('/:id', (req, res) => {
-  const id = req.params.id
-  return Record.findById(id)
+router.put('/:id', async (req, res) => {
+  const userId = req.user._id 
+  const _id = req.params.id
+  return await Record.findOne({ _id, userId })
     .then(record => {
+      // 找到特定user的某筆花費資料，將欲更新內容放進去
       record = Object.assign(record, req.body)
       return record.save()
     })
@@ -45,8 +52,9 @@ Handlebars.registerHelper('selected', function(value, test) {
 
 // Delete
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Record.findById(id)
+  const userId = req.user._id 
+  const _id = req.params.id
+  return Record.findOne({ _id, userId })
     .then(record => record.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
@@ -57,7 +65,8 @@ router.get('/', async (req, res) => {
   const selectedCategory = Object.keys(req.query)[0]
   let total = 0
   let noResult = ''
-
+ 
+  // 找到使用者，再去篩選類別跟月份
   try {
     const records = await Record.find({
       category: selectedCategory
