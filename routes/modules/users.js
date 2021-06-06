@@ -1,8 +1,8 @@
 const express = require('express')
-const session = require('express-session')
 const router = express.Router()
 const User = require('../../models/user')
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
   res.render('login')
@@ -50,7 +50,9 @@ router.post('/register', async (req, res) => {
       res.render('register', { errors, name, email, password, confirmPassword })
     } else {
       // 如果還沒註冊：寫入資料庫，並導回首頁
-      await User.create({ name, email, password })
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(password, salt)
+      await User.create({ name, email, password: hash })
       return res.redirect('/')
     }
   } catch (err) {
