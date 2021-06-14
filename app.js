@@ -37,12 +37,12 @@ app.use(flash())
 // 使用 app.use 代表這組 middleware 會作用於所有的路由
 app.use((req, res, next) => {
   // req.user 是在反序列化時，取出的 user 資訊，之後會放在 req.user 裡以供後續使用
-  console.log("req user: ", req.user)
+  // console.log("req user: ", req.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
   res.locals.warning_msg = req.flash('warning_msg')
-  next()
+  next() // 代表此 middleware 執行結束
 })
 app.use(routes)
 

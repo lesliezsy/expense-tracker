@@ -24,7 +24,7 @@
             Required
           </div>
         </div>
-         <div class="col-12 mb-3">
+        <div class="col-12 mb-3">
           <label for="merchant" class="form-label">Merchant *</label>
           <input type="text" class="form-control" id="merchant" name="merchant" maxlength="35" required>
           <div class="invalid-feedback">
@@ -49,7 +49,9 @@
 
         <div class="col-12 mb-3">
           <label for="amount" class="form-label">Amount *</label>
-          <input type="number" class="form-control" id="amount" name="amount" min="0" max="10000000000" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+          <input type="number" class="form-control" id="amount" name="amount" min="0" max="10000000000" maxlength="11"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            required>
           <div class="invalid-feedback">
             Required. Integer only. Maximum value: $10000000000.
           </div>
@@ -85,16 +87,8 @@
       })
   })()
 
-  // 限制日期區間： 2020.01.01 至 今日
-  let date = new Date().toISOString().substr(0, 10);
+  // 限制日期範圍： 2020.01.01 至 今日
+  let date = moment().format('YYYY-MM-DD')
   document.querySelector("#date").value = date;
-
-  let today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth() + 1; //January is 0!
-  let yyyy = today.getFullYear();
-  if (dd < 10) dd = '0' + dd
-  if (mm < 10) mm = '0' + mm
-  today = yyyy + '-' + mm + '-' + dd;
-  document.querySelector("#date").setAttribute("max", today);
+  document.querySelector("#date").max = date;
 </script>

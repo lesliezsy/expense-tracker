@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
 // Update
 router.get('/:id/edit', (req, res) => {
-  const userId = req.user._id 
+  const userId = req.user._id
   const _id = req.params.id
   return Record.findOne({ _id, userId }) // 利用id查詢資料庫的資料
     .lean()
@@ -33,7 +33,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  const userId = req.user._id 
+  const userId = req.user._id
   const _id = req.params.id
   return await Record.findOne({ _id, userId })
     .then(record => {
@@ -45,6 +45,7 @@ router.put('/:id', async (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 編輯時，設定 category 原本已選的項目 為 selected
 Handlebars.registerHelper('selected', function(value, test) {
   if (value == undefined) return ''
   return value === test ? 'selected' : ''
@@ -52,49 +53,12 @@ Handlebars.registerHelper('selected', function(value, test) {
 
 // Delete
 router.delete('/:id', (req, res) => {
-  const userId = req.user._id 
+  const userId = req.user._id
   const _id = req.params.id
   return Record.findOne({ _id, userId })
     .then(record => record.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
-})
-
-// Filter - 先篩選出類別及項目內容，再計算總金額
-router.get('/', async (req, res) => {
-  const selectedCategory = Object.keys(req.query)[0]
-  let total = 0
-  let noResult = ''
- 
-  // 找到使用者，再去篩選類別跟月份
-  try {
-    const records = await Record.find({
-      category: selectedCategory
-    }).lean()
-    const amountData = await Record.aggregate([{ $match: { "category": selectedCategory } },
-      { "$group": { _id: null, amount: { $sum: "$amount" } } },
-      { $project: { _id: 0 } }
-    ])
-
-    if (amountData.length === 0 || !amountData) {
-      noResult = 'No expense in this category so far.'
-      return res.render('index', { noResult, total })
-    }
-
-    total = amountData[0]['amount']
-
-    // match category icon
-    records.map(record => {
-      Category.results.map(category => {
-        if (record.category === category.name) record.icon = category.icon
-      })
-    })
-
-    res.render('index', { records, total })
-
-  } catch (err) {
-    console.log(err);
-  }
 })
 
 module.exports = router

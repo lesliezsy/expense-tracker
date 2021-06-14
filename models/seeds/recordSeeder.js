@@ -1,3 +1,6 @@
+const bcrypt = require('bcryptjs')
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 const Record = require('../record')
 const db = require('../../config/mongoose')
 
