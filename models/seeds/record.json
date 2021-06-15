@@ -1,34 +1,51 @@
-{
-  "results": [
-    {
-      "name": "Breakfast",
-      "date": "2021-04-18",
-      "category": "Food",
-      "amount": 60
-    },
-    {
-      "name": "Lunch",
-      "date": "2021-04-18",
-      "category": "Food",
-      "amount": 90
-    },
-    {
-      "name": "Rent",
-      "date": "2021-04-18",
-      "category": "House",
-      "amount": 10000
-    },
-    {
-      "name": "Bus",
-      "date": "2021-04-18",
-      "category": "Transport",
-      "amount": 300
-    },
-    {
-      "name": "Movie: Fast & Furious 9",
-      "date": "2021-04-22",
-      "category": "Entertainment",
-      "amount": 410
-    }
-  ]
-}
+[
+  {
+    "name": "Breakfast",
+    "date": "2021-03-20",
+    "category": "Food",
+    "merchant": "Miss Energy",
+    "amount": 60
+  },
+  {
+    "name": "Lunch",
+    "date": "2021-04-18",
+    "category": "Food",
+    "merchant": "Subway",
+    "amount": 135
+  },
+  {
+    "name": "Afternoon Tea",
+    "date": "2021-04-22",
+    "category": "Food",
+    "merchant": "Godiva",
+    "amount": 230
+  },
+  {
+    "name": "Rent",
+    "date": "2021-04-28",
+    "category": "House",
+    "merchant": "SCAN",
+    "amount": 10000
+  },
+  {
+    "name": "Bus",
+    "date": "2021-04-28",
+    "category": "Transport",
+    "merchant": "eCard",
+    "amount": 300
+  },
+  {
+    "name": "Movie: Fast & Furious 9",
+    "date": "2021-06-10",
+    "category": "Entertainment",
+    "merchant": "ViewShow",
+    "amount": 410
+  },
+  {
+    "name": "French Fries",
+    "date": "2021-06-15",
+    "category": "Food",
+    "merchant": "Fast Food Factory",
+    "amount": 35
+  }
+]

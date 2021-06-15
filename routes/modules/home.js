@@ -5,17 +5,11 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 
 // Filter - 先篩選出類別及項目內容，再計算總金額
-Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-  return (arg1 === arg2) ? 'selected' : '';
+Handlebars.registerHelper('ifEquals', function(value1, value2, options) {
+  return (value1 === value2) ? 'selected' : '';
 });
-// Handlebars.registerHelper('selected', function(value, test) {
-//   // if (value == undefined) return ''
-//   return value === test ? 'selected' : ''
-// });
-
 
 router.get('/', async (req, res) => {
-  // console.log("月份: ", req.query.month, "類別: ", req.query.category);
   const { _id:userId } = req.user
   const { category, month } = req.query
   const regMonth = new RegExp(month, 'i') 
@@ -30,7 +24,6 @@ router.get('/', async (req, res) => {
       { $match: { $and: [getCategory(category), { date: {$regex : regMonth} }, { userId } ] } },
       { $sort : { date: -1 } }
     ])
-    // console.log("records: ", records);
 
     // 計算總消費額
     let totalAmount = 0
@@ -53,7 +46,6 @@ router.get('/', async (req, res) => {
 module.exports = router
 
 function getCategory(category) {
-  console.log("category:", category);
   // 如果沒選，就回傳空物件
   if (category === 'Category' || category === undefined) return {}
   return { category }

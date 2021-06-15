@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Handlebars = require("handlebars")
 const Record = require('../../models/record')
-const Category = require('../../public/js/category')
 
 // Create
 router.get('/new', (req, res) => {

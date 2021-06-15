@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
     // 如果已經註冊：退回原本畫面
     if (user) {
       errors.push({ message: 'This user already exists.' })
-      console.log('User already exists.')
+      // console.log('User already exists.')
       res.render('register', { errors, name, email, password, confirmPassword })
     } else {
       // 如果還沒註冊：寫入資料庫，並導回首頁

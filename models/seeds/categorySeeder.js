@@ -9,9 +9,10 @@ db.once('open', async () => {
     for (const category of expenseCategories) {
       await Category.create(category)
     }
-    await db.close()
-    console.log('Category seeder done.')
+    console.log('CategorySeeder done.')
+    process.exit()
   } catch (err) {
     console.log(err)
+    process.exit()
   }
 })
