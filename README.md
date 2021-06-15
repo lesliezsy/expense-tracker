@@ -6,9 +6,9 @@
 Expense Tracker is a website built with Node.js &amp; Express.
 
 ### As an owner, you can
-* Manage your expenses
+* Register as a member and log in to manage your expenses
 * Track all of your spending
-* Break down your expenses with category
+* Break down your expenses with category and month
 
 ### As a developer, you can
 * Get the source code
@@ -28,28 +28,36 @@ $ git clone https://github.com/lesliezsy/expense-tracker
 ```
 
 ### Install Dependencies
-After cloning this project, run either ``yarn`` or ``npm install`` to build all the dependencies in the project.
+After cloning this project, run either ``yarn install`` or ``npm install`` to build all the dependencies in the project.
 
-Using npm:
+then:
 
-```
-$ npm install
-```
 ```
 $ npm run dev
 ```
 ```
 $ npm run seed
 ```
+or
+```
+$ yarn run dev
+```
+```
+$ yarn run seed
+```
 
 
-### Ecosystem
+
+### Dev Tools
 * node.js: v12.19.0
 * express: v4.17.1
 * express-handlebars: v5.3.0
+* express-session: v1.17.2
 * body-parser: v1.19.0
 * method-override: v3.0.0
 * mongoose: v5.12.5
-* Bootstrap: v4.6.0
-* font-awesome: v5.15.2
+* passport.js: v0.4.1
+* dotenv: v10.0.0
+* connect-flash: v0.1.1
+* bcryptjs: v2.4.3
 
