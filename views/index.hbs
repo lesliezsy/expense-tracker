@@ -4,23 +4,12 @@
 
       {{!-- 月份 --}}
       <form action="/" class="d-flex justify-content-between">
-        <input class="form-control col-5" type="month" name="month" min="2021-01" onchange="this.form.submit()">
-
-        {{!-- <select class="form-control col-5" id="month" name="month" onchange="this.form.submit()">
-          <option selected> Month </option>
-          <option value="1">Jan</option>
-          <option value="2">Feb</option>
-          <option value="3">Mar</option>
-        </select> --}}
-
-        {{!--
-      </form> --}}
+        <input class="form-control col-5" type="month" name="month" min="2021-01" onchange="this.form.submit()" value="{{month}}">
       {{!-- 類別 --}}
-      {{!-- <form action="/records" class="col-6"> --}}
         <select class="form-control col-5" id="category" name="category" onchange="this.form.submit()">
-          <option selected> Category </option>
+          <option > Category </option>
           {{#each categories}}
-          <option>{{this.name}}</option>
+          <option value={{this.name}} {{#ifEquals ../category this.name}}selected{{/ifEquals}}>{{this.name}}</option>
           {{/each}}
         </select>
       </form>

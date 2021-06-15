@@ -1,34 +1,36 @@
 const express = require('express')
 const router = express.Router()
-// const Handlebars = require("handlebars")
-const moment = require('moment')
-
+const Handlebars = require("handlebars")
 const Record = require('../../models/record')
 const Category = require('../../models/category')
-// const Category = require('../../public/js/category')
 
 // Filter - 先篩選出類別及項目內容，再計算總金額
-// Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-//   return (arg1 !== arg2) ? options.fn(this) : options.inverse(this);
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 === arg2) ? 'selected' : '';
+});
+// Handlebars.registerHelper('selected', function(value, test) {
+//   // if (value == undefined) return ''
+//   return value === test ? 'selected' : ''
 // });
 
+
 router.get('/', async (req, res) => {
-  console.log("月份: ", req.query.month, "類別: ", req.query.category);
-  const userId = req.user._id
+  // console.log("月份: ", req.query.month, "類別: ", req.query.category);
+  const { _id:userId } = req.user
   const { category, month } = req.query
+  const regMonth = new RegExp(month, 'i') 
   // 找到使用者的expense資料，再去篩選類別或月份
-  // 如果月份或類別沒選，就預設全部 ************
   try {
     // 取得 消費類別
     const categories = await Category.find().lean()
     // 取得 使用者消費紀錄
     const records = await Record.aggregate([
     // 比對 user, category, 資料庫跟req的年月 
-      { $match: { $and: [getCategory(category), { userId } ] } },
-      // { "$group": { _id: null, amount: { $sum: "$amount" } } },
-      // { $project: { _id: 0 } }
+     // 如果月份或類別沒選，就預設全部 ************
+      { $match: { $and: [getCategory(category), { date: {$regex : regMonth} }, { userId } ] } },
+      { $sort : { date: -1 } }
     ])
-    console.log("userExpenses: ", records);
+    // console.log("records: ", records);
 
     // 計算總消費額
     let totalAmount = 0
@@ -41,8 +43,7 @@ router.get('/', async (req, res) => {
         }
       }
     }
-    // console.log("totalAmount: ", totalAmount)
-    res.render('index', { categories, records, totalAmount })
+    res.render('index', { categories, records, totalAmount, month, category})
 
   } catch (err) {
     console.log(err)
@@ -52,14 +53,8 @@ router.get('/', async (req, res) => {
 module.exports = router
 
 function getCategory(category) {
+  console.log("category:", category);
   // 如果沒選，就回傳空物件
   if (category === 'Category' || category === undefined) return {}
   return { category }
-}
-
-function getMonth(month) {
-  console.log("month: ", month);
-  // moment(month).format('MM')
-  if (month === '' || month === undefined) return {}
-  return moment(month).format('MM')
 }

@@ -12,10 +12,10 @@ module.exports = {
       "name": "Transport",
       "icon": "fas fa-bus"
     },
-    {
-      "name": "Medical",
-      "icon": "fas fa-hospital-alt"
-    },
+    // {
+    //   "name": "Medical",
+    //   "icon": "fas fa-hospital-alt"
+    // },
     {
       "name": "Entertainment",
       "icon": "fas fa-grin-beam"
